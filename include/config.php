@@ -10,9 +10,9 @@
 //defined('database_name') ? null : define("database_name", "aasmnhs") ;
 
 defined('server') ? null : define("server", "localhost");
-defined('user') ? null : define ("user", "root") ;
+defined('user') ? null : define ("user", "rou514710581_root") ;
 defined('pass') ? null : define("pass","IVWxvwYnQ!0l");
-defined('database_name') ? null : define("database_name", "aasmnhs") ;
+defined('database_name') ? null : define("database_name", "u514710581_aasmnhs") ;
 
 $this_file = str_replace('\\', '/', __File__) ;
 $doc_root = $_SERVER['DOCUMENT_ROOT'];
