@@ -7,7 +7,7 @@
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
  //defined('SITE_ROOT') ? null : define ('SITE_ROOT', $_SERVER['DOCUMENT_ROOT'].DS.''); //Uncomment me before pushing
-defined('SITE_ROOT') ? null : define ('SITE_ROOT', $_SERVER['DOCUMENT_ROOT'].DS.'anselmo'); // COmment me after fixing error on local code
+defined('SITE_ROOT') ? null : define ('SITE_ROOT', $_SERVER['DOCUMENT_ROOT'].DS.''); // COmment me after fixing error on local code
 
 
 defined('LIB_PATH') ? null : define ('LIB_PATH',SITE_ROOT.DS.'include');
