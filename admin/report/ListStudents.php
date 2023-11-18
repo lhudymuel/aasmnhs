@@ -85,7 +85,7 @@
         <br/>
         <address>
         <div class="form-group"> 
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="submit" class="btn btn-primary">View</button>
 		  </div>
 		  
         </address>

@@ -1,249 +1,6 @@
- <!-- `IDNO`, `FNAME`, `LNAME`, `MNAME`, `SEX`, `BDAY`, `BPLACE`, `STATUS`, `AGE`, `NATIONALITY`,
- `RELIGION`, `CONTACT_NO`, `HOME_ADD`, `EMAIL`, `ACC_PASSWORD`, `student_status`, `schedID`, `course_year` -->
- <?php
- if (isset($_POST['regsubmit'])) {
-
-$_SESSION['STUDID'] 	  =  $_POST['IDNO'];
-$_SESSION['FNAME'] 	      =  $_POST['FNAME'];
-$_SESSION['LNAME']  	  =  $_POST['LNAME'];
-$_SESSION['MI']           =  $_POST['MI'];
-$_SESSION['PADDRESS']     =  $_POST['PADDRESS'];
-$_SESSION['SEX']          =  $_POST['optionsRadios'];
-$_SESSION['BIRTHDATE']    = date_format(date_create($_POST['BIRTHDATE']),'Y-m-d'); 
-$_SESSION['NATIONALITY']  =  $_POST['NATIONALITY'];
-$_SESSION['BIRTHPLACE']   =  $_POST['BIRTHPLACE'];
-$_SESSION['RELIGION']     =  $_POST['RELIGION'];
-$_SESSION['CONTACT']      =  $_POST['CONTACT'];
-$_SESSION['CIVILSTATUS']  =  $_POST['CIVILSTATUS'];
-$_SESSION['GUARDIAN']     =  $_POST['GUARDIAN'];
-$_SESSION['GCONTACT']     =  $_POST['GCONTACT'];
-$_SESSION['COURSEID'] 	  =  $_POST['COURSE'];
-// $_SESSION['SEMESTER']     =  $_POST['SEMESTER'];  
-$_SESSION['USER_NAME']    =  $_POST['USER_NAME']; 
-$_SESSION['PASS']    	  =  $_POST['PASS']; 
-
-
- 	$student = New Student();
-	$res = $student->find_all_student($_POST['LNAME'],$_POST['FNAME'],$_POST['MI']);
-
-if ($res) {
-	# code...
-	message("Student already exist.", "error");
-    redirect(web_root."index.php?q=enrol");
-
- }else{
-
-$sql="SELECT * FROM tblstudent WHERE ACC_USERNAME='" . $_SESSION['USER_NAME'] . "'";
-$userresult = mysqli_query($mydb->conn,$sql) or die(mysqli_error($mydb->conn));
-$userStud  = mysqli_fetch_assoc($userresult);
-
-if($userStud){
-	message("Username is already taken.", "error");
-    redirect(web_root."index.php?q=enrol");
-}else{
-	if($_SESSION['COURSEID']=='Select' || $_SESSION['SEMESTER']=='Select' ){
-		message("Select course and semester exactly"."error");
-		redirect("index.php?q=enrol");
-
-	}else{
-
-	$age = date_diff(date_create($_SESSION['BIRTHDATE']),date_create('today'))->y;
-
-    if ($age < 15){
-       message("Cannot Proceed. Must be 15 years old and above to enroll.", "error");
-       redirect("index.php?q=enrol");
-
-    }else{
-		$student = New Student();
-		$student->IDNO 			= $_SESSION['STUDID'];
-		$student->FNAME 		= $_SESSION['FNAME'];
-		$student->LNAME 		= $_SESSION['LNAME'];
-		$student->MNAME 		= $_SESSION['MI'];
-		$student->SEX 			= $_SESSION['SEX'];
-		$student->BDAY 			= $_SESSION['BIRTHDATE'];
-		$student->BPLACE 		= $_SESSION['BIRTHPLACE'];
-		$student->STATUS 		= $_SESSION['CIVILSTATUS'];
-		$student->NATIONALITY 	= $_SESSION['NATIONALITY'];
-		$student->RELIGION 		= $_SESSION['RELIGION'];
-		$student->CONTACT_NO	= $_SESSION['CONTACT'];
-		$student->HOME_ADD 		= $_SESSION['PADDRESS'];
-		$student->ACC_USERNAME	= $_SESSION['USER_NAME'];
-		$student->ACC_PASSWORD 	= sha1($_SESSION['PASS']);
-		$student->COURSE_ID   	= $_SESSION['COURSEID'];
-		$student->SEMESTER   	= $_SESSION['SEMESTER']; 
-		$student->student_status ='New';
-		$student->YEARLEVEL   	= 1; 
-		$student->NewEnrollees  = 1; 
-		$student->create();
-
-		$studentdetails = New StudentDetails();
-		$studentdetails->IDNO = $_SESSION['STUDID'];
-		$studentdetails->GUARDIAN = $_SESSION['GUARDIAN'];
-		$studentdetails->GCONTACT = $_SESSION['GCONTACT']; 
-		$studentdetails->create(); 
-
-		$studAuto = New Autonumber();
-		$studAuto->studauto_update();
-
-		@$_SESSION['IDNO'] = $_SESSION['STUDID'];
-		redirect("index.php?q=profile");
-
-    }
-
-		
-	}
-}
- 
-
- 	# code...
-// unset($_SESSION['STUDID']);
-// unset($_SESSION['FNAME']);
-// unset($_SESSION['LNAME']);
-// unset($_SESSION['MI']);
-// unset($_SESSION['PADDRESS']);
-// unset($_SESSION['SEX']);
-// unset($_SESSION['BIRTHDATE']); 
-// unset($_SESSION['BIRTHPLACE']);
-// unset($_SESSION['RELIGION']);
-// unset($_SESSION['CONTACT']);
-// unset($_SESSION['CIVILSTATUS']);
-// unset($_SESSION['GUARDIAN']);
-// unset($_SESSION['GCONTACT']);
-// unset($_SESSION['COURSEID']);
-// unset($_SESSION['SEMESTER']); 
-// unset($_SESSION['USER_NAME']);
-// unset($_SESSION['PASS']); 
-
- }
- }
-
-
-
-	$currentyear = date('Y');
-	$nextyear =  date('Y') + 1;
-	$sy = $currentyear .'-'.$nextyear;
-	$_SESSION['SY'] = $sy; 
-
-
-	$studAuto = New Autonumber();
-	$autonum = $studAuto->stud_autonumber();
-?>
-
-<script>
-    function validateUsername() {
-        var userName = document.getElementById('USER_NAME').value;
-        if (!userName.includes('@gmail.com')) {
-            $('#usernameModal').modal('show');
-            return false;
-        }
-        return true;
-    }
-
-    function validatePassword() {
-        var password = document.getElementById('PASS').value;
-        if (password.length < 8) {
-            $('#passwordModal').modal('show');
-            return false;
-        }
-        return true;
-    }
-	function togglePassword() {
-      var passwordInput = document.getElementById('PASS');
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-      } else {
-        passwordInput.type = "password";
-      }
-    }
-	
-
-	function checkPassword() {
-        var passwordInput = document.getElementById("PASS");
-        var errorMessage = document.getElementById("error-message");
-        var passwordValue = passwordInput.value.trim();
-        if (passwordValue.length < 8) {
-            passwordInput.classList.add("invalid");
-            errorMessage.style.display = "block";
-        } else {
-            passwordInput.classList.remove("invalid");
-            errorMessage.style.display = "none";
-        }
-    }
-
-
-	
-</script>
-
-<!-- Modal HTML for username validation -->
-<div id="usernameModal" class="modal fade" role="dialog">
-<div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sorry for the Interuption</h4>
-            </div>
-            <div class="modal-body">
-                <p>Username must contain the @gmail.com </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal HTML for password validation -->
-<div id="passwordModal" class="modal fade" role="dialog">
-    <!-- Modal content for password validation --> <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Password Requirement</h4>
-            </div>
-            <div class="modal-body">
-                <p>Password must be at least 8 characters long.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<li class="list-group-item text-right">
-    <span class="pull-left"><strong>Enrollment Status</strong></span> 
-
-    <?php 
-        $mydb->setQuery("SELECT * FROM `tblsemester`");
-        $cur = $mydb->loadResultList();
-
-        foreach ($cur as $result) {
-            if (!isset($result->estatus) || empty($result->estatus)) {
-                echo '<span style="color: red;">Closed</span>';
-            } else {
-                if ($result->estatus == 'Open') {
-                    echo '<span style="color: green;">' . $result->estatus . '</span>';
-                } else {
-                    echo '<span style="color: red;">' . $result->estatus . '</span>';
-                }
-            }
-        }
-    ?> 
-</li>
-
-
-
-<?php
-// Check if the enrollment status is 'Open'
-if (isset($result->estatus) && $result->estatus == 'Open') {
-    // Display your enrollment form here
-    ?>
- <form onsubmit="return validateUsername() && validatePassword(); return false;" action="" class="form-horizontal well" method="post">
+<form onsubmit="return validateUsername() && validatePassword(); return false;" action="" class="form-horizontal well" method="post">
     <!-- Username and password fields -->
-    <tr> <h1>Register</h1>
+    <tr>
         <td><label>Username</label></td>
         <td colspan="2">
             <input required="true" class="form-control input-md" id="USER_NAME" name="USER_NAME" placeholder="Username" type="text" value="<?php echo isset($_SESSION['USER_NAME']) ? $_SESSION['USER_NAME'] : ''; ?>">
@@ -280,7 +37,7 @@ if (isset($result->estatus) && $result->estatus == 'Open') {
     <tr>
         <td></td>
         <td colspan="5">
-            <button class="btn btn-success btn-lg" onclick="revealForm()" type="button">Register</button>
+            <button class="btn btn-success btn-lg" onclick="revealForm()" type="button">Submit</button>
         </td>
     </tr>
 
@@ -291,14 +48,11 @@ if (isset($result->estatus) && $result->estatus == 'Open') {
 	    <div class="col-md-8"><h2><img style="width: 60px; height: 60px; margin-top: -30px;" src="img/logonbg.png" alt="">Enrollment Form</h2></div>
     	<div class="col-md-4"><label>Academic Year: <?php echo $_SESSION['SY'] ; ?></label></div>
 
-		
-
         <table class="table">
             <!-- ... Rest of the form content ... -->
             <tr>
 				<td><label>Id</label></td>
 				<td >
-					
 					<input class="form-control input-md" readonly id="IDNO" name="IDNO" placeholder="Student Id" type="text" value="<?php echo isset($_SESSION['STUDID']) ? $_SESSION['STUDID'] : $autonum->AUTO; ?>">
 				</td>
 				<td colspan="4"></td>
@@ -407,7 +161,7 @@ if (isset($result->estatus) && $result->estatus == 'Open') {
 			<tr>
 				<td><label>Username</label></td>
 				<td colspan="2">
-				  <input readonly required="true"  class="form-control input-md" id="hiddenUsername" id="USER_NAME" name="USER_NAME" placeholder="Username" type="text"value="<?php echo isset($_SESSION['USER_NAME']) ? $_SESSION['USER_NAME'] : ''; ?>">
+				  <input required="true"  class="form-control input-md" id="USER_NAME" name="USER_NAME" placeholder="Username" type="text"value="<?php echo isset($_SESSION['USER_NAME']) ? $_SESSION['USER_NAME'] : ''; ?>">
 				</td>
 
 				<style>
@@ -426,7 +180,7 @@ if (isset($result->estatus) && $result->estatus == 'Open') {
 				<td><label>Password</label></td>
 				<td colspan="2">
 				<div class="input-group">
-				<input readonly required="true"  class="form-control input-md" id="hiddenPassword" id="PASS" name="PASS" placeholder="Password" type="password"value="<?php echo isset($_SESSION['PASS']) ? $_SESSION['PASS'] : ''; ?>" oninput="checkPassword() ">
+				<input required="true"  class="form-control input-md" id="PASS" name="PASS" placeholder="Password" type="password"value="<?php echo isset($_SESSION['PASS']) ? $_SESSION['PASS'] : ''; ?>" oninput="checkPassword()">
         <div class="input-group-addon">
 		<button  onclick="togglePassword()" style="border: none; outline: none;"><i class="fa fa-eye" aria-hidden="true"></i></button>
         </div>
@@ -565,47 +319,12 @@ if (isset($result->estatus) && $result->estatus == 'Open') {
 
             // Check if both username and password are filled
             if (username !== "" && password !== "") {
-				document.getElementById("hiddenUsername").value = username;
-            document.getElementById("hiddenPassword").value = password;
                 // Show the rest of the form
                 document.getElementById("fullForm").style.display = "block";
-				alert("Register Complete Fill up the form bellow to enroll...")
             } else {
                 // Handle the case where either username or password is not filled
                 alert("Please fill in both username and password.");
             }
         }
     </script>
-	
-
 </form>
-	</div>
-
-<?php
-}else{
-      // If enrollment is closed, display a modal
-    ?>
-	 <!-- Modal -->
-	 <div id="enrollmentClosedModal" class="modal" style="display: block;">
-        <div sytle="height: 100px;" class="modal-content">
-            <span class="close" onclick="document.getElementById('enrollmentClosedModal').style.display='none'">&times;</span>
-            <p sytle="color: red;">Enrollment is closed. Please check back later.</p>
-        </div>
-    </div>
-
-    <script>
-        // Close modal when the close button (×) is clicked
-        document.getElementsByClassName('close')[0].addEventListener('click', function () {
-            document.getElementById('enrollmentClosedModal').style.display = 'none';
-        });
-
-        // Close modal when clicking outside the modal content
-        window.addEventListener('click', function (event) {
-            if (event.target == document.getElementById('enrollmentClosedModal')) {
-                document.getElementById('enrollmentClosedModal').style.display = 'none';
-            }
-        });
-    </script>
-<?php
-}
-?>

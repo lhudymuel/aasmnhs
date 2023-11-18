@@ -40,7 +40,7 @@
       <div class="col-sm-2 invoice-col"> 
         <br/> 
           <div class="form-group"> 
-              <button type="submit" id="gosearch" name="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" id="gosearch" name="submit" class="btn btn-primary">View</button>
          </div>  
         </div>
         <!-- /.col -->
