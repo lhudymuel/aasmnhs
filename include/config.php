@@ -10,7 +10,7 @@
 //defined('database_name') ? null : define("database_name", "aasmnhs") ;
 
 defined('server') ? null : define("server", "127.0.0.1");
-defined('user') ? null : define ("user", "rou514710581_root") ;
+defined('user') ? null : define ("user", "u514710581_root") ;
 defined('pass') ? null : define("pass","IVWxvwYnQ!0l");
 defined('database_name') ? null : define("database_name", "u514710581_aasmnhs") ;
 
