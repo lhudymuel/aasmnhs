@@ -69,17 +69,40 @@
                   </div>
 
                   <div class="form-group">
-                    <div class="col-md-8">
-                      <label class="col-md-4 control-label" for=
-                      "sched_day">Days:</label>
+    <div class="col-md-8">
+        <label class="col-md-4 control-label" for="sched_day">Days:</label>
 
-                      <div class="col-md-8">
-                        
-                         <input class="form-control input-sm" id="sched_day" name="sched_day" placeholder=
-                            "Day" type="text" value="">
-                      </div>
-                    </div>
-                  </div>
+        <div class="col-md-8">
+            <!-- Replace the input field with a dropdown menu for days -->
+            <select class="form-control input-sm" id="sched_day" name="sched_day">
+                <!-- Add your different day options as options -->
+                <option value="M">M</option>
+                <option value="MT">MT</option>
+                <option value="MW">MW</option>
+                <option value="MTh">MTh</option>
+                <option value="MF">MF</option>
+                <option value="T">T</option>
+                <option value="T">TW</option>
+                <option value="T">TTh</option>
+                <option value="T">TF</option>
+                <option value="W">W</option>
+                <option value="W">WTh</option>
+                <option value="W">WF</option>
+                <option value="Th">Tu</option>
+                <option value="Th">TuF</option>
+                <option value="F">F</option>
+                <option value="MTW">MTW</option>
+                <option value="MTWTh">MTWTu</option>
+                <option value="MTWThF">MTWTuF</option>
+                <option value="TWThF">TWTuF</option>
+                <option value="WThF">WTuF</option>
+                <option value="ThF">TuF</option>
+              
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+    </div>
+</div>
 
                   
                   <div class="form-group">

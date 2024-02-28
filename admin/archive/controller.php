@@ -23,12 +23,28 @@ switch ($action) {
 	doupdateimage();
 	break;
 
-	case 'archive' :
-		doArchive();
+	case 'restore':
+		doRestore();
 		break;
 
  
 	}
+
+	function doRestore() {
+		global $mydb;
+	
+		if (isset($_GET['id'])) {
+			$subjId = $_GET['id'];
+	
+			$mydb->setQuery("UPDATE `subject` SET ARCHIVE = 'Active' WHERE SUBJ_ID = '{$subjId}'");
+			$mydb->executeQuery();
+	
+			// Add any additional actions or redirects after restoring
+			// For example, you might want to redirect to the archived employees list
+			header("Location: index.php?view=archived");
+		}
+	}
+
 
 	function doArchive() {
 		global $mydb;

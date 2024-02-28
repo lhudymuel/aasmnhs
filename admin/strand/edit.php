@@ -24,20 +24,31 @@
                         
                          <input class="form-control input-sm" id="COURSE_ID" name="COURSE_ID" placeholder=
                             "Account Id" type="Hidden" value="<?php echo $singlecourse->COURSE_ID; ?>">
+
+
+                            <div class="form-group">
+    <div class="col-md-8">
+        <label class="col-md-4 control-label" for="COURSE_NAME">Strand:</label>
+
+        <div class="col-md-8">
+            <input name="deptid" type="hidden" value="<?php echo $singlecourse->COURSE_NAME; ?>">
+            
+            <!-- Replace the input field with a dropdown menu -->
+            <select class="form-control input-sm" id="COURSE_NAME" name="COURSE_NAME" >
+                <!-- Add your different choices as options -->
+
+                <option value="none"><?php echo $singlecourse->COURSE_NAME; ?></option>
+                <option value="Humanities and Social Science">Humanities and Social Science </option>
+                <option value="Accountancy, Business and Management Strand">Accountancy, Business and Management Strand</option>
+                <option value="General Academic Strand">General Academic Strand</option>
+                <option value="Information and Computer Technology">Information and Computer Technology</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+    </div>
+</div>
                     
-                    <div class="form-group">
-                    <div class="col-md-8">
-                      <label class="col-md-4 control-label" for=
-                      "COURSE_NAME">Course:</label>
-
-                      <div class="col-md-8">
-                        
-                         <input class="form-control input-sm" id="COURSE_NAME" name="COURSE_NAME" placeholder=
-                            "Course" type="text" value="<?php echo $singlecourse->COURSE_NAME; ?>">
-                      </div>
-                    </div>
-                  </div>
-
+                  
                   <div class="form-group">
                     <div class="col-md-8">
                       <label class="col-md-4 control-label" for=

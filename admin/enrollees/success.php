@@ -48,7 +48,7 @@ $_SESSION['SY'] = $sy;
         </div>
     
         <div class="col-sm-4 invoice-col">
-          <b>Course/Year:  <?php 
+          <b>Strand/Year:  <?php 
             $course = New Course();
             $singlecourse = $course->single_course($studres->COURSE_ID ); 
 

@@ -27,18 +27,23 @@
                     <!--   </div>
                     </div>
                   </div> -->           
-                   <div class="form-group">
-                    <div class="col-md-8">
-                      <label class="col-md-4 control-label" for=
-                      "DEPARTMENT_NAME">Track:</label>
+                  <div class="form-group">
+    <div class="col-md-8">
+        <label class="col-md-4 control-label" for="DEPARTMENT_NAME">Track:</label>
 
-                      <div class="col-md-8">
-                        <input name="deptid" type="hidden" value="">
-                         <input class="form-control input-sm" id="DEPARTMENT_NAME" name="DEPARTMENT_NAME" placeholder=
-                            "Track Name" type="text" value="">
-                      </div>
-                    </div>
-                  </div>
+        <div class="col-md-8">
+            <!-- Replace the input field with a dropdown menu for track names -->
+            <select class="form-control input-sm" id="DEPARTMENT_NAME" name="DEPARTMENT_NAME">
+                <!-- Add your different track name options as options -->
+                <option value="TVL">TVL</option>
+                <option value="Academic">Academic</option>
+                
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+    </div>
+</div>
+
 
                   <div class="form-group">
                     <div class="col-md-8">

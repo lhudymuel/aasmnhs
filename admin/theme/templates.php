@@ -220,12 +220,13 @@ $singleuser = $user->single_user($_SESSION['ACCOUNT_ID']);
                         </li>
                       
                         <li>
-                             <a href="<?php echo web_root; ?>admin/subject/index.php"><i class="fa fa-book fa-fw"></i>Subjects 
-                             <label class="label pull-right label-primary"><?php echo $totsu ; ?></label> </a>
-                                
-                             
-                            
-           
+                             <a href="<?php echo web_root; ?>admin/subject/index.php"><i class="fa fa-book fa-fw"></i>  Subjects 
+                             </a>
+                        </li>
+
+                        <li>
+                             <a href="<?php echo web_root; ?>admin/archive/index.php"><i class="fa fa-archive fw-fa"></i>    Archive Subjects 
+                              </a>
                         </li>
                         <li>
                              <a href="<?php echo web_root; ?>admin/track/index.php" ><i class="fa  fa-building fa-fw"></i> Track
@@ -300,10 +301,7 @@ $singleuser = $user->single_user($_SESSION['ACCOUNT_ID']);
                           
                         </li>
                       
-                        <li>
-                            <a href="<?php echo web_root; ?>admin/back-up/index.php" ><i class="fa fa-user fa-fw"></i> Back-up and Restore </a>
-                          
-                        </li>
+                        
                  <?php }  ?>
  
  

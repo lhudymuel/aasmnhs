@@ -33,6 +33,7 @@
 				  		<!-- <th>Academic Year</th> -->
 				  		<th>Semester</th>
 				  		<th width="10%" >Action</th>
+						
 				 
 				  	</tr>	
 				  </thead> 
@@ -44,40 +45,35 @@
 
 				  		$cur = $mydb->loadResultList();
 
-						foreach ($cur as $result) {
-				  		echo '<tr>';
-				  		// echo '<td width="5%" align="center"></td>';
-				  		echo '<td>' . $result->SUBJ_ID.'</a></td>';
-				  		echo '<td>'. $result->SUBJ_CODE.'</td>';
-				  		echo '<td>'. $result->SUBJ_DESCRIPTION.'</td>';
-				  		echo '<td>' . $result->UNIT.'</a></td>';
-				  		echo '<td>'. $result->PRE_REQUISITE.'</td>';
-				  		echo '<td>'. $result->COURSE_NAME.'-'.$result->COURSE_LEVEL.'</td>';
-				  		// echo '<td>' . $result->AY.'</a></td>';
-				  		echo '<td>'. $result->SEMESTER.'</td>'; 
-				  		 
-				  		echo '<td align="center" >
-						  <li alidn="center"  style="color:transparent; " class="dropdown" >
-						  <a style="margin-left: -15px; "  class="dropdown-toggle" data-toggle="dropdown" href="#" >
-							  <i style=" font-style: normal;"  class="btn btn-danger btn-xs"><span class="fa fa-trash-o fw-fa"></span></i>
-						  </a>
-						  <ul class="dropdown-menu dropdown-user">
-							  <li>
-							  <p style="color: red;">Confirm delete?</p>
-							  <a title="Delete" href="controller.php?action=delete&id='.$result->SUBJ_ID.'" class="btn btn-danger btn-xs" ><span>Delete</span> </a>
-							  </li>						   
-						  </ul>
-						
-						<a title="Edit" href="index.php?view=edit&id='.$result->SUBJ_ID.'"  class="btn btn-primary btn-xs  ">Edit <span class="fa fa-pencil fw-fa"></span></a>
-
-					
-						  
-						
-				  				
-				  					 </td>';
-				  		echo '</tr>';
-				  	} 
-				  	?>
+						  foreach ($cur as $result) {
+							// Check if the ARCHIVE column is equal to "archive"
+							if ($result->ARCHIVE !== 'Archived') {
+								echo '<tr>';
+								echo '<td>' . $result->SUBJ_ID . '</a></td>';
+								echo '<td>' . $result->SUBJ_CODE . '</td>';
+								echo '<td>' . $result->SUBJ_DESCRIPTION . '</td>';
+								echo '<td>' . $result->UNIT . '</a></td>';
+								echo '<td>' . $result->PRE_REQUISITE . '</td>';
+								echo '<td>' . $result->COURSE_NAME . '-' . $result->COURSE_LEVEL . '</td>';
+								echo '<td>' . $result->SEMESTER . '</td>';
+								
+								echo '<td align="center">
+										<li align="center" style="color:transparent;" class="dropdown">
+											<a style="margin-left: -15px;" class="dropdown-toggle" data-toggle="dropdown" href="#">
+												<i style="font-style: normal;" class="btn btn-warning btn-xs"> <span class="fa fa-archive fw-fa"></span></i>
+											</a>
+											<ul class="dropdown-menu dropdown-user">
+												<li>
+													<p style="color: red;">Do you want to Archive this?</p>
+													<a title="Archive" href="controller.php?action=archive&id=' . $result->SUBJ_ID . '" class="btn btn-warning btn-xs">Archive</a>
+												</li>
+											</ul>
+											<a title="Edit" href="index.php?view=edit&id=' . $result->SUBJ_ID . '" class="btn btn-primary btn-xs">Edit <span class="fa fa-pencil fw-fa"></span></a>
+									   </td>';
+								echo '</tr>';
+							}
+						}
+						?>
 				  </tbody>
 					
 				</table>

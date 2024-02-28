@@ -35,7 +35,7 @@
 </div>
 
 <div class="panel subject">
-  <a href="<?php echo web_root; ?>admin/subject/index.php"><span><?php echo $totsu ; ?> <br>  </span>Subjects</a>
+  <a href="<?php echo web_root; ?>admin/subject/index.php"><span> <br>  </span>Subjects</a>
 </div>
 </div>
 
